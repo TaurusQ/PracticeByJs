@@ -100,9 +100,8 @@
       var timer = play = null;
       var i = index = 0;
       
-      //按钮切换
+      //鼠标移动到下标上，会播放该下标的图片
       Array.prototype.forEach.call(aNum,function(item,index){
-        
         item.onmouseover = function(){
           show(index);
         }
@@ -121,27 +120,30 @@
       autoplay();
       
       //自动播放
-      
       function autoplay(){
         play = setInterval(function(){
           index++;
           if(index >= aImg.length){
             index = 0;
           }
-          
+          //注意这里传入的参数
           show(index);
           
         },2000);
       }
     
       
-      //播放图片
+      //播放图片，淡入淡出的效果
       function show(a){
-        
+        /**
+        防止下标越界，注意函数里面用到了aNum[index]，所以传进来的参数应该是1-5，而不是0-4
+        */
         if(a >= aImg.length) return;
         index = a; 
         
+        //如果没有这行代码则会出现切换没有淡入淡出的效果
         clearInterval(timer);
+        
         Array.prototype.forEach.call(aImg,function(item){
           item.style.opacity = 0;
         });
@@ -152,6 +154,7 @@
         aNum[index].className = "current";
         
         var alpha = 0;
+        //设置图片效果定时器
         timer = setInterval(function(){
           alpha += 1;
           if(alpha > 100){
