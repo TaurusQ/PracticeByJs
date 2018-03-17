@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    div,ul,li,img{
+      padding: 0;
+      margin: 0;
+    }
+    body{
+      background: #333;
+      text-align: center;
+    }
+    #box{
+      position: relative;
+      width: 492px;
+      height: 170px;
+      margin: 0 auto;
+    }
+    ul{
+      list-style-type: none;
+      margin: 0 auto;
+    }
+    .list{
+      position: relative;
+      width: 490px;
+      height: 170px;
+      border: 10px solid #fff;
+      border-radius: 10px;
+    }
+    .list>li{
+      position:absolute;
+      width:492px;
+      height: 172px;
+      overflow: hidden;
+      
+      opacity: 0;
+    }
+    .list>li.current{
+      opacity: 100;
+    }
+    li>img{
+      border: 1px solid #ccc;
+    }
+    .num{
+      position: absolute;
+      right: 0;
+      bottom: 0;
+    }
+    .num>li{
+      float: left;
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      font-size: 12px;
+      color: #fff;
+      background: #F90;
+      margin-left: 10px;
+      /* border: 10px solid #F90; */
+      border-radius: 10px;
+      opacity: 0.9;
+    }
+    
+    .num>li.current{
+      background: #f60;
+    }
+  </style>
+  </head>
+  <body>
+    <div id="box">
+    <ul class="list">
+      <li class="current"><img src="http://www.fgm.cc/learn/lesson4/img/01.jpg" alt=""></li>
+      <li><img src="http://www.fgm.cc/learn/lesson4/img/02.jpg" alt=""></li>
+      <li><img src="http://www.fgm.cc/learn/lesson4/img/03.jpg" alt=""></li>
+      <li><img src="http://www.fgm.cc/learn/lesson4/img/04.jpg" alt=""></li>
+      <li><img src="http://www.fgm.cc/learn/lesson4/img/05.jpg" alt=""></li>
+    </ul>
+    <ul class="num">
+      <li class="current">1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+    </ul>
+  </div>
+  </body>
+  
+  <script>
+    
+    window.onload = function(){
+      
+      var oBox = document.querySelector("#box");
+      var aUl = document.querySelectorAll("ul");
+      
+      var aImg = aUl[0].querySelectorAll("li");
+      var aNum = aUl[1].querySelectorAll("li");
+       
+      var timer = play = null;
+      var i = index = 0;
+      
+      //按钮切换
+      Array.prototype.forEach.call(aNum,function(item,index){
+        
+        item.onmouseover = function(){
+          show(index);
+        }
+      });
+      
+      //鼠标划过关闭定时器
+      aNum.onmouseover = function(){
+        clearInterval(play);
+      }
+      
+      //鼠标离开运行自动播放
+      aNum.onmouseout = function(){
+        autoplay();
+      };
+      
+      autoplay();
+      
+      //自动播放
+      
+      function autoplay(){
+        play = setInterval(function(){
+          index++;
+          if(index >= aImg.length){
+            index = 0;
+          }
+          
+          show(index);
+          
+        },2000);
+      }
+    
+      
+      //播放图片
+      function show(a){
+        
+        if(a >= aImg.length) return;
+        index = a; 
+        
+        clearInterval(timer);
+        Array.prototype.forEach.call(aImg,function(item){
+          item.style.opacity = 0;
+        });
+        
+        Array.prototype.forEach.call(aNum,function(item){
+          item.className = "";
+        });
+        aNum[index].className = "current";
+        
+        var alpha = 0;
+        timer = setInterval(function(){
+          alpha += 1;
+          if(alpha > 100){
+            alpha = 100;
+          }
+          
+          aImg[index].style.opacity = alpha / 100;
+          
+          if(alpha == 100){
+            clearInterval(timer);
+          }
+        },20);
+      }
+    }
+    </script>
+</html>
