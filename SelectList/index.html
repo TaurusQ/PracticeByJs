@@ -30,6 +30,9 @@
       background-position: right 0;
       
     }
+    /**
+    将这部分样式由图片改为CSS3属性实现
+    */
     #search form{
       line-height: 27px;
       height: 27px;
@@ -113,6 +116,7 @@
     
     //给输入框绑定点击事件
     select.addEventListener('click',function(event){
+      //阻止事件冒泡，也可以用 event.cancelBubbel = true;
       event.stopPropagation();
       sub.style.display = sub.style.display == "block" ? "none":"block";
     });
