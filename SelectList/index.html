@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    body,div,span,a,ul,li{
+      padding: 0;
+      margin: 0;
+      font-size: 12px;
+      color: #fff;
+    }
+    ul{
+      list-style-type: none;
+    }
+    body{
+      background: #23384e;
+    }
+    #search {    
+      background: url(http://www.fgm.cc/learn/lesson5/img/search.jpg) no-repeat;
+      height: 34px;
+      border-radius: 3px;
+      width:350px;
+      margin: 10px auto;
+    }
+    #search .box{
+      height: 34px;
+      background: url(http://www.fgm.cc/learn/lesson5/img/search.jpg) no-repeat;
+      background-position: right 0;
+      
+    }
+    #search form{
+      line-height: 27px;
+      height: 27px;
+      margin-left: 40px;
+      margin-right: 20px;
+      border-top-width: 3px;
+      border-top-style: solid;
+      border-image:linear-gradient(#e0e0e0,#d5d5d5) 100 0;
+      background: linear-gradient(to bottom, #f4f4f4,#c8c8c8 50%,#b3b3b3 50%,#c9c9c9);
+    }
+    #search form span{
+      background: url(http://www.fgm.cc/learn/lesson5/img/search.jpg) no-repeat;
+      background-position: 0 -68px;
+      width: 190px;
+      height: 22px;
+      line-height: 22px;
+      float: left;
+      padding-left: 10px;
+      cursor:pointer;
+    }
+    #search form a{
+      float: left;
+      width: 78px;
+      height: 22px;
+      line-height: 22px;
+      text-decoration: none;
+      text-align:center;
+      margin-left: 10px;      
+      color:#333;
+      background:url(http://www.fgm.cc/learn/lesson5/img/search.jpg) no-repeat;
+      background-position: 0 -90px;
+    }
+    #search form a:hover{
+      color:#f60;
+      background-position: -80px -90px;
+    }
+    #search .sub{
+      margin-left: 40px;
+      width: 198px;
+      background:#242424;
+      border: 1px solid #fff;
+      border-top: none;
+      margin-top: -10px;
+      display: none;
+    }
+    #search .sub li{
+      padding-left: 10px;
+      border-bottom: 1px dotted #fff;
+      height: 25px;
+      line-height: 24px;
+      margin-top: -1px;
+      cursor: pointer;
+    }
+    #search .sub li:hover{
+      background: #8b8b8b;
+    }
+  </style>
+</head>
+<body>
+  <div id="search">
+    <div class="box">
+      <form action="">
+        <span class="select">请选择游戏名称</span>
+        <a href="javascript:;">搜索</a>
+      </form>
+    </div>
+    <ul class="sub">
+      <li>地下城与勇士</li>
+      <li>魔兽世界</li>
+      <li>热血江湖</li>
+      <li>神鬼传奇</li>
+      <li>大话西游</li>
+      <li>幻想世界</li>
+    </ul>
+  </div>
+</body>
+  <script>
+    var select = document.querySelector(".select");
+    var list = document.querySelectorAll(".sub li");
+    var sub = document.querySelector(".sub");
+    
+    //给输入框绑定点击事件
+    select.addEventListener('click',function(event){
+      event.stopPropagation();
+      sub.style.display = sub.style.display == "block" ? "none":"block";
+    });
+    
+    //给列表的每一项绑定点击事件
+    Array.prototype.forEach.call(list,function(item,index){
+      item.addEventListener('click',function(){
+        sub.style.display = "none";
+        select.innerHTML = item.innerHTML;
+      });
+    });
+    
+    //给document绑定事件，即点击空白区域，隐藏下拉列表
+    document.addEventListener('click',function(){
+      sub.style.display = "none";
+    });
+  </script>
+</html>
